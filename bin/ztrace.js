@@ -18,8 +18,8 @@ const argv = require('yargs')
   .describe('color', 'Toggle color output (always/never/auto)')
   .describe('r', 'Trace return values of traced functions')
   .describe('z', 'Provide the __ztrace__ global')
-  .describe('e', 'An expression for selective hooking. This is the fast one.')
-  .describe('p', 'An expression for selective printing. This is the easy one.')
+  .describe('e', 'An expression for selective hooking')
+  .describe('p', 'An expression for selective printing')
   .example('$0 -- npm --version')
   .argv;
 
