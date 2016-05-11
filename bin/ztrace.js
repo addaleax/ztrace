@@ -14,6 +14,8 @@ const argv = require('yargs')
   .alias('r', 'returned').count('r')
   .describe('r', 'Trace return values of traced functions')
   .describe('z', 'Provide the __ztrace__ global')
+  .describe('e', 'A regular expression for selective hooking. This is the fast one.')
+  .describe('w', 'A regular expression for selective printing. This is the easy one.')
   .example('$0 -- npm --version')
   .argv;
 
@@ -28,7 +30,9 @@ if (argv.r > 0) trace.ret = !!(argv.r % 2);
 
 new ZTraceCLI().init({
   trace,
-  provideGlobal: argv.z
+  provideGlobal: argv.z,
+  hookExpression: argv.e ? new RegExp(argv.e) : undefined,
+  printExpression: argv.w ? new RegExp(argv.w) : undefined
 });
 
 process.argv = [process.argv[0]].concat(argv._);
