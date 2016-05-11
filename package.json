@@ -2,7 +2,9 @@
   "name": "ztrace",
   "version": "1.0.0",
   "dependencies": {
+    "arrify": "^1.0.1",
     "chalk": "^1.1.3",
+    "which": "^1.2.8",
     "yargs": "^4.7.0"
   },
   "main": "lib/ztrace.js",
