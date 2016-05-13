@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "ztrace",
   "version": "1.0.0",
   "dependencies": {
