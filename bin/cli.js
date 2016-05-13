@@ -27,17 +27,28 @@ const argv = require('yargs')
   .boolean('z').describe('z', 'Provide the __ztrace__ global')
   .describe('e', 'An expression for selective hooking')
   .describe('p', 'An expression for selective printing')
+  .describe('S', 'An expression for selective stack trace printing')
   .example('$0 -- npm --version')
   .argv;
 
+const fs = require('fs');
 const Module = require('module');
 const which = require('which');
 const arrify = require('arrify');
 const chalk = require('chalk');
 const regexify = require('../lib/regexify.js');
 
+const outputFD = 2;
+const output = {
+  write(chunk) {
+    fs.writeSync(outputFD, chunk);
+  }
+};
+
 if (argv.color !== undefined && argv.color !== 'auto') {
   chalk.enabled = !['never', 'no'].includes(argv.color);
+} else {
+  chalk.enabled = require('tty').isatty(outputFD)
 }
 
 try {
@@ -56,12 +67,15 @@ if (argv.l !== undefined) trace.moduleLoading = !!argv.l;
 
 const hookExpressions = arrify(argv.e).map(e => regexify(e));
 const printExpressions = arrify(argv.p).map(e => regexify(e));
+const stackExpressions = arrify(argv.S).map(e => regexify(e));
 
 const options = {
   trace,
   provideGlobal: argv.z,
-  hookExpressions: hookExpressions,
-  printExpressions: printExpressions,
+  hookExpressions,
+  printExpressions,
+  stackExpressions,
+  output
 };
 
 if (argv.startupWarnings !== undefined)
