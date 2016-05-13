@@ -19,6 +19,9 @@ const argv = require('yargs')
   .boolean('r').default('r', undefined)
   .alias('r', 'returned').alias('r', 'ret')
   .describe('r', 'Trace return values of traced functions')
+  .boolean('l').default('l', undefined)
+  .alias('l', 'loading')
+  .describe('l', 'Trace module loading internals')
   .alias('color', 'colour').alias('color', 'colors').alias('color', 'colours')
   .describe('color', 'Toggle color output (always/never/auto)')
   .boolean('z').describe('z', 'Provide the __ztrace__ global')
@@ -49,6 +52,7 @@ if (argv.m !== undefined) trace.module = !!argv.m;
 if (argv.g !== undefined) trace.global = !!argv.g;
 if (argv.a !== undefined) trace.passed = !!argv.a;
 if (argv.r !== undefined) trace.ret = !!argv.r;
+if (argv.l !== undefined) trace.moduleLoading = !!argv.l;
 
 const hookExpressions = arrify(argv.e).map(e => regexify(e));
 const printExpressions = arrify(argv.p).map(e => regexify(e));
