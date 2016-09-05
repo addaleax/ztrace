@@ -27,7 +27,7 @@ const argv = require('yargs')
   .boolean('z').describe('z', 'Provide the __ztrace__ global')
   .describe('e', 'An expression for selective hooking')
   .describe('p', 'An expression for selective printing')
-  .describe('S', 'An expression for selective stack trace printing')
+  .describe('S', 'An expression for selective stack\u00a0trace printing')
   .example('$0 -- npm --version')
   .argv;
 
