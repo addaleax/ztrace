@@ -24,4 +24,22 @@ describe('ztrace', function() {
       done();
     });
   });
+
+  it('can apply selective hooking of modules', function(done) {
+    this.timeout(20000);
+
+    const proc = cp.spawn(process.execPath, [bin, '-e', 'fs.**', path.join(fixtures, 'base.js')]);
+
+    let stderr = '';
+    proc.stderr.setEncoding('utf8');
+    proc.stderr.on('data', data => stderr += data);
+
+    proc.on('close', (code, signal) => {
+      assert.strictEqual(code, 0);
+      assert.ok(/^\s*fs\.readFile\(/m.test(stderr));
+      assert.ok(/^\s*fs\.writeFile\(/m.test(stderr));
+      assert.ok(!/^\s*process\b/m.test(stderr));
+      done();
+    });
+  });
 });
