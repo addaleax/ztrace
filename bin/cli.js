@@ -22,6 +22,9 @@ const argv = require('yargs')
   .boolean('l').default('l', undefined)
   .alias('l', 'loading')
   .describe('l', 'Trace module loading internals')
+  .string('s').default('s', undefined)
+  .alias('s', 'object-display-size')
+  .describe('s', 'Object display length')
   .alias('color', 'colour').alias('color', 'colors').alias('color', 'colours')
   .describe('color', 'Toggle color output (always/never/auto)')
   .boolean('z').describe('z', 'Provide the __ztrace__ global')
@@ -69,13 +72,21 @@ const hookExpressions = arrify(argv.e).map(e => regexify(e));
 const printExpressions = arrify(argv.p).map(e => regexify(e));
 const stackExpressions = arrify(argv.S).map(e => regexify(e));
 
+let objectDisplayLength = undefined;
+if (!isNaN(argv.s)) {
+  objectDisplayLength = +argv.s;
+} else if (argv.s === 'unlimited') {
+  objectDisplayLength = Infinity;
+}
+
 const options = {
   trace,
   provideGlobal: argv.z,
   hookExpressions,
   printExpressions,
   stackExpressions,
-  output
+  output,
+  objectDisplayLength
 };
 
 if (argv.startupWarnings !== undefined)
