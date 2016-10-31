@@ -33,5 +33,6 @@
   "bugs": {
     "url": "https://github.com/addaleax/ztrace/issues"
   },
-  "homepage": "https://github.com/addaleax/ztrace#readme"
+  "homepage": "https://github.com/addaleax/ztrace#readme",
+  "license": "GPL-3.0+"
 }
