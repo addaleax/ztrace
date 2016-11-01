@@ -33,6 +33,16 @@ fs.statSync('/')
 If you want to trace everything, you can do that using just `ztrace ./test.js`
 – but be warned: This is still *very* slow.
 
+There are shortcuts for programatically tracing interactions single objects
+to stderr:
+
+```js
+const ztrace = require('ztrace');
+
+// Displays results of this call to stderr.
+ztrace(fs).statSync('.');
+```
+
 License
 =======
 

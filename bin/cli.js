@@ -40,25 +40,19 @@ const which = require('which');
 const arrify = require('arrify');
 const chalk = require('chalk');
 const regexify = require('../lib/regexify.js');
-
-const outputFD = 2;
-const output = {
-  write(chunk) {
-    fs.writeSync(outputFD, chunk);
-  }
-};
+const output = require('../lib/output.js');
 
 if (argv.color !== undefined && argv.color !== 'auto') {
   chalk.enabled = !['never', 'no'].includes(argv.color);
 } else {
-  chalk.enabled = require('tty').isatty(outputFD)
+  chalk.enabled = require('tty').isatty(output.fd);
 }
 
 try {
   argv._[0] = which.sync(argv._[0]);
 } catch(e) {}
 
-const ZTraceWriter = require('../lib/writer.js');
+const { ZTraceWriter } = require('../lib/writer.js');
 const trace = {};
 
 if (argv.b !== undefined) trace.binding = !!argv.b;
