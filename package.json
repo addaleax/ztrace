@@ -1,6 +1,6 @@
 {
   "name": "ztrace",
-  "version": "1.0.0-beta2",
+  "version": "1.0.0",
   "dependencies": {
     "arrify": "^1.0.1",
     "chalk": "^1.1.3",

@@ -41,6 +41,9 @@ const ztrace = require('ztrace');
 
 // Displays results of this call to stderr.
 ztrace(fs).statSync('.');
+
+// Output:
+// ~.statSync('.') = { dev: 44, mode: 16893, nlink:....377Z }
 ```
 
 License
