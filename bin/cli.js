@@ -36,6 +36,7 @@ const argv = require('yargs')
 
 const fs = require('fs');
 const Module = require('module');
+const path = require('path');
 const which = require('which');
 const arrify = require('arrify');
 const chalk = require('chalk');
@@ -51,6 +52,10 @@ if (argv.color !== undefined && argv.color !== 'auto') {
 try {
   argv._[0] = which.sync(argv._[0]);
 } catch(e) {}
+
+const resolved = path.resolve(argv._[0]);
+if (fs.existsSync(resolved))
+  argv._[0] = resolved;
 
 const { ZTraceWriter } = require('../lib/writer.js');
 const trace = {};
