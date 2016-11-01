@@ -58,7 +58,7 @@ try {
   argv._[0] = which.sync(argv._[0]);
 } catch(e) {}
 
-const ZTraceCLI = require('../lib/shim.js');
+const ZTraceWriter = require('../lib/writer.js');
 const trace = {};
 
 if (argv.b !== undefined) trace.binding = !!argv.b;
@@ -92,7 +92,7 @@ const options = {
 if (argv.startupWarnings !== undefined)
   options.suppressStartupWarnings = !argv.startupWarnings;
 
-new ZTraceCLI().init(options);
+new ZTraceWriter().init(options);
 
 process.argv = [process.argv[0]].concat(argv._);
 Module.runMain(); // inspects process.argv[1]
